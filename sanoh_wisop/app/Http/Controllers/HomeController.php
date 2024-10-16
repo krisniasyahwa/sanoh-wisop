@@ -26,7 +26,7 @@ class HomeController extends Controller
         $navigationList = [
             ['name' => 'Home', 'svg' => '<svg>...</svg>'],
             ['name' => 'Dashboard', 'svg' => '<svg>...</svg>'],
-            ['name' => 'Products', 'svg' => '<svg>...</svg>'],
+            ['name' => 'Documents', 'svg' => '<svg>...</svg>'],
             // Add more items as necessary
         ];
 

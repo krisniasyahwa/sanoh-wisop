@@ -11,13 +11,13 @@ class DocumentController extends Controller
     public function index()
     {
         $documents = Document::all();
-        return view('admin.products.index', compact('documents'));
+        return view('admin.documents.index', compact('documents'));
     }
 
     // Menampilkan form untuk menambah dokumen baru
     public function create()
     {
-        return view('admin.products.create');
+        return view('admin.documents.create');
     }
 
     // Menyimpan dokumen baru ke dalam database
@@ -32,14 +32,14 @@ class DocumentController extends Controller
 
         Document::create($validated);
 
-        return redirect()->route('admin.products.index')->with('success', 'Dokumen berhasil ditambahkan');
+        return redirect()->route('admin.documents.index')->with('success', 'Dokumen berhasil ditambahkan');
     }
 
     // Menampilkan form untuk mengedit dokumen
     public function edit($id)
     {
         $document = Document::findOrFail($id);
-        return view('admin.products.edit', compact('document'));
+        return view('admin.documents.edit', compact('document'));
     }
 
     // Memperbarui data dokumen yang ada
@@ -47,16 +47,16 @@ class DocumentController extends Controller
     {
         $document = Document::findOrFail($id);
         $validated = $request->validate([
-            'doc_partno' => 'required|string|max:255',
-            'doc_type' => 'required|in:WI,SOP,SPIS,SPSS',
-            'doc_path' => 'required|string',
-            // Validasi tambahan untuk field lain...
+            'doc_effective_date' => 'required|date',
+            'doc_expired_date' => 'required|date|after_or_equal:doc_effective_date',
+            // Validasi tambahan untuk field lain jika diperlukan...
         ]);
 
         $document->update($validated);
 
-        return redirect()->route('admin.products.index')->with('success', 'Dokumen berhasil diperbarui');
+        return redirect()->route('admin.documents.index')->with('success', 'Dokumen berhasil diperbarui');
     }
+
 
     // Menghapus dokumen
     public function destroy($id)
@@ -64,13 +64,13 @@ class DocumentController extends Controller
         $document = Document::findOrFail($id);
         $document->delete();
 
-        return redirect()->route('admin.products.index')->with('success', 'Dokumen berhasil dihapus');
+        return redirect()->route('admin.documents.index')->with('success', 'Dokumen berhasil dihapus');
     }
 
     // Menampilkan halaman scan dokumen (untuk Warehouse)
     public function scan()
     {
-        return view('warehouse.show');
+        return view('warehouse.show'); //ganti
     }
 
     // Memvalidasi dan menampilkan dokumen setelah scan

@@ -4,7 +4,6 @@
  * building robust, powerful web applications using React + Laravel.
  */
 
-import './react';
 
 import './bootstrap';
 
