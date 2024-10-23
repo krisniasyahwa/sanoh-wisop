@@ -9,11 +9,6 @@ class Document extends Model
 {
     use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'doc_partno',
         'doc_type',
@@ -24,5 +19,11 @@ class Document extends Model
         'doc_status',
         'doc_customer',
         'doc_dept',
+        'doc_process',
     ];
+
+    public function masterItem()
+    {
+        return $this->belongsTo(MasterItem::class, 'doc_partno', 'doc_partno');
+    }
 }

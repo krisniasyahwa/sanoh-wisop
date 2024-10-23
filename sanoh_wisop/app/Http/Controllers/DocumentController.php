@@ -10,9 +10,10 @@ class DocumentController extends Controller
     // Menampilkan daftar dokumen (khusus Admin)
     public function index()
     {
-        $documents = Document::all();
+        $documents = Document::with('masterItem')->get();
         return view('admin.documents.index', compact('documents'));
     }
+
 
     // Menampilkan form untuk menambah dokumen baru
     public function create()
@@ -38,24 +39,25 @@ class DocumentController extends Controller
     // Menampilkan form untuk mengedit dokumen
     public function edit($id)
     {
-        $document = Document::findOrFail($id);
+        $document = Document::with('masterItem')->findOrFail($id);
         return view('admin.documents.edit', compact('document'));
     }
+
 
     // Memperbarui data dokumen yang ada
     public function update(Request $request, $id)
     {
-        $document = Document::findOrFail($id);
+        $document = Document::with('masterItem')->findOrFail($id);
         $validated = $request->validate([
             'doc_effective_date' => 'required|date',
             'doc_expired_date' => 'required|date|after_or_equal:doc_effective_date',
-            // Validasi tambahan untuk field lain jika diperlukan...
         ]);
 
         $document->update($validated);
 
         return redirect()->route('admin.documents.index')->with('success', 'Dokumen berhasil diperbarui');
     }
+
 
 
     // Menghapus dokumen
@@ -77,7 +79,7 @@ class DocumentController extends Controller
     public function show(Request $request)
     {
         $doc_partno = $request->input('doc_partno');
-        $document = Document::where('doc_partno', $doc_partno)->first();
+        $document = Document::with('masterItem')->where('doc_partno', $doc_partno)->first();
 
         if ($document) {
             return view('warehouse.show', compact('document'));
