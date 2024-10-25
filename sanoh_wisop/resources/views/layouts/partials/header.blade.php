@@ -456,7 +456,7 @@
           >
             <li>
               <a
-                href="{{ route('profile') }}"
+                {{-- href="{{ route('profile') }}" --}}
                 class="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
               >
                 <svg
@@ -481,7 +481,7 @@
             </li>
             <li>
               <a
-                href="{{ route('messages') }}"
+                {{-- href="{{ route('messages') }}" --}}
                 class="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
               >
                 <svg
@@ -502,7 +502,7 @@
             </li>
             <li>
               <a
-                href="{{ route('settings') }}"
+                {{-- href="{{ route('settings') }}" --}}
                 class="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
               >
                 <svg

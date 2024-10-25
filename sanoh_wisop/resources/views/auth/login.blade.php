@@ -5,16 +5,15 @@
     <div class="flex h-screen overflow-hidden">
         <!-- Sidebar placeholder (if any, can be removed if not needed) -->
         <div class="hidden w-full xl:block xl:w-1/2">
-            <div class="px-26 py-17.5 text-center">
+            <div class="px-26 py-20 text-center flex flex-col items-center">
+                <!-- Logo -->
                 <a class="mb-5.5 inline-block" href="index.html">
-                    <img class="hidden dark:block" src="{{ asset('images/logo/logo-sanoh.png') }}" alt="Logo" />
+                    <img class="hidden dark:block" src="{{ asset('images/logo/logo-sanoh.png') }}" alt="Logo"
+                        style="width: 150px; height: auto; transform: translateX(-20px);" />
                 </a>
 
-                <p class="font-medium 2xl:px-20">
-                    Welcome to our platform, please sign in to continue.
-                </p>
-
-                <span class="mt-15 inline-block">
+                <!-- Illustration -->
+                <span class="mt-5 inline-block">
                     <img src="{{ asset('images/sign-in/illustration-03.svg') }}" alt="illustration" />
                 </span>
             </div>
@@ -38,7 +37,7 @@
                             <!-- Sign-in Form -->
                             <div class="w-full xl:w-1/2 xl:border-l-2">
                                 <div class="w-full p-4 sm:p-12.5 xl:p-17.5">
-                                    <span class="mb-1.5 block font-medium">Start for free</span>
+                                    <span class="mb-1.5 block font-medium"> Welcome to our platform, please sign in to continue.</span>
                                     <h2 class="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
                                         Sign In to Your Account
                                     </h2>
