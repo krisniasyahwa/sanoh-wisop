@@ -14,3 +14,6 @@ import './bootstrap';
  */
 
 import './components/Example';
+
+import "../css/font.css";
+import "../css/app.css";
