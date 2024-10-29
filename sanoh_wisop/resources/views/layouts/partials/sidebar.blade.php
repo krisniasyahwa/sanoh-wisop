@@ -94,7 +94,7 @@
         <!-- Logout Box -->
         <div
             class="mt-auto mx-auto w-full max-w-60 rounded-sm border border-strokedark bg-boxdark px-4 py-6 text-center shadow-default">
-            <a href="{{ route('login') }}"
+            <a href="{{ route('logout') }}"
                 class="flex items-center justify-center rounded-md bg-primary p-2 text-white hover:bg-opacity-95">
                 Logout
             </a>
