@@ -39,23 +39,26 @@ Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware(
 // Route untuk menampilkan halaman dokumen (sebagai user biasa)
 Route::get('/documents', [DocumentController::class, 'index'])->name('documents');
 
+//Route untuk mengambil data
+Route::post('/documents/get-document', [DocumentController::class, 'getDocument'])->name('documents.get');
+
 // Route untuk halaman manajemen akun
 Route::get('/manage-account', [AccountController::class, 'index'])->name('manage-account');
 
 // Group Route untuk Admin dengan middleware 'isAdmin'
 Route::middleware(['auth', 'isAdmin'])->group(function () {
     // Menampilkan daftar dokumen
-    Route::get('/admin/products', [DocumentController::class, 'index'])->name('admin.products.index');
+    Route::get('/admin/documents', [DocumentController::class, 'index'])->name('admin.documents.index');
     // Menampilkan form untuk menambah dokumen baru
-    Route::get('/admin/products/create', [DocumentController::class, 'create'])->name('admin.products.create');
+    Route::get('/admin/documents/create', [DocumentController::class, 'create'])->name('admin.documents.create');
     // Menyimpan dokumen baru
-    Route::post('/admin/products', [DocumentController::class, 'store'])->name('admin.products.store');
+    Route::post('/admin/documents', [DocumentController::class, 'store'])->name('admin.documents.store');
     // Menampilkan form untuk mengedit dokumen
-    Route::get('/admin/products/{id}/edit', [DocumentController::class, 'edit'])->name('admin.products.edit');
+    Route::get('/admin/documents/{id}/edit', [DocumentController::class, 'edit'])->name('admin.documents.edit');
     // Memperbarui dokumen yang sudah ada
-    Route::put('/admin/products/{id}', [DocumentController::class, 'update'])->name('admin.products.update');
+    Route::put('/admin/documents/{id}', [DocumentController::class, 'update'])->name('admin.documents.update');
     // Menghapus dokumen
-    Route::delete('/admin/products/{id}', [DocumentController::class, 'destroy'])->name('admin.products.destroy');
+    Route::delete('/admin/documents/{id}', [DocumentController::class, 'destroy'])->name('admin.documents.destroy');
 });
 
 // Group Route untuk Warehouse dengan middleware 'auth'

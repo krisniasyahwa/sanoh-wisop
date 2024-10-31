@@ -94,10 +94,13 @@
         <!-- Logout Box -->
         <div
             class="mt-auto mx-auto w-full max-w-60 rounded-sm border border-strokedark bg-boxdark px-4 py-6 text-center shadow-default">
-            <a href="{{ route('logout') }}"
-                class="flex items-center justify-center rounded-md bg-primary p-2 text-white hover:bg-opacity-95">
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="flex items-center justify-center">
+                @csrf
+                <button type="submit"
+                class="w-full rounded-md bg-primary p-2 text-white hover:bg-opacity-95 transition duration-200">
                 Logout
-            </a>
+            </button>
+        </form>
         </div>
     </div>
 </aside>

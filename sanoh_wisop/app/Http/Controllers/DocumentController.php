@@ -58,8 +58,6 @@ class DocumentController extends Controller
         return redirect()->route('admin.documents.index')->with('success', 'Dokumen berhasil diperbarui');
     }
 
-
-
     // Menghapus dokumen
     public function destroy($id)
     {
@@ -87,4 +85,18 @@ class DocumentController extends Controller
             return redirect()->back()->with('error', 'Data tidak ditemukan');
         }
     }
+
+    // Mengambil data dokumen
+    public function getDocument(Request $request)
+{
+    $doc_partno = $request->input('doc_partno');
+    $document = Document::where('doc_partno', $doc_partno)->first();
+
+    if ($document) {
+        return response()->json(['success' => true, 'doc_path' => asset($document->doc_path)]);
+    } else {
+        return response()->json(['success' => false, 'message' => 'Document not found']);
+    }
+}
+
 }
