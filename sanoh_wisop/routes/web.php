@@ -43,7 +43,7 @@ Route::get('/documents', [DocumentController::class, 'index'])->name('documents'
 Route::post('/documents/get-document', [DocumentController::class, 'getDocument'])->name('documents.get');
 
 // Route untuk halaman manajemen akun
-Route::get('/manage-account', [AccountController::class, 'index'])->name('manage-account');
+Route::post('/documents/get-document', [DocumentController::class, 'getDocument'])->name('documents.get');
 
 // Group Route untuk Admin dengan middleware 'isAdmin'
 Route::middleware(['auth', 'isAdmin'])->group(function () {

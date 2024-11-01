@@ -38,8 +38,8 @@
 
                 <!-- Modal Body -->
                 <div class="mt-4">
-                    <iframe id="documentContent" src="{{ asset('pdf/sample.pdf') }}"
-                        class="w-full h-[700px] md:h-[600px]" type="application/pdf"></iframe>
+                    <iframe id="documentContent" src="" class="w-full h-[700px] md:h-[600px]"
+                        type="application/pdf"></iframe>
                 </div>
 
                 <!-- Modal Footer -->
@@ -85,67 +85,68 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-                const barcodeInput = document.getElementById('barcodeInput');
-                const barcodeForm = document.getElementById('barcodeForm');
-                const barcodeModal = document.getElementById('barcodeModal');
-                const documentContent = document.getElementById('documentContent');
-                // const pdfUrl = `/path/to/pdf/${documentValue}.pdf`;
+            const barcodeInput = document.getElementById('barcodeInput');
+            const barcodeForm = document.getElementById('barcodeForm');
+            const barcodeModal = document.getElementById('barcodeModal');
+            const documentContent = document.getElementById('documentContent');
+            // const pdfUrl = `/path/to/pdf/${documentValue}.pdf`;
 
-                // Fokuskan input ke barcode scanner ketika halaman dimuat
-                barcodeInput.focus();
+            // Fokuskan input ke barcode scanner ketika halaman dimuat
+            barcodeInput.focus();
 
-                // Tangani event ketika form disubmit
-                barcodeForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    // Ambil data dari input
-                    const barcodeValue = barcodeInput.value;
-                    // const documentValue = documentInput.value;
+            // Tangani event ketika form disubmit
+            barcodeForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                // Ambil data dari input
+                const barcodeValue = barcodeInput.value;
+                // const documentValue = documentInput.value;
 
-                    // Lakukan proses yang diinginkan dengan data barcode
-                    if (barcodeValue !== "") {
-                        // alert(`Barcode scanned: ${documentValue}`);
-                        // Reset nilai input setelah submit
+                // Lakukan proses yang diinginkan dengan data barcode
+                if (barcodeValue !== "") {
+                    // alert(`Barcode scanned: ${documentValue}`);
+                    // Reset nilai input setelah submit
 
-                        // Set informasi dokumen ke dalam modal
-                        // document.getElementById('documentDetails').innerText =
-                        //     `Informasi dokumen: Test Document`;
+                    // Set informasi dokumen ke dalam modal
+                    // document.getElementById('documentDetails').innerText =
+                    //     `Informasi dokumen: Test Document`;
 
-                        // Lakukan AJAX request untuk mendapatkan informasi dokumen
-                        $.ajax({
-                            url: "{{ route('documents.get') }}",
-                            method: "POST",
-                            data: {
-                                _token: "{{ csrf_token() }}",
-                                doc_partno: barcodeValue
-                            },
-                            success: function(response) {
-                                if (response.success) {
-                                    // Tampilkan dokumen dalam iframe
-                                    documentContent.src = response.doc_path;
-                                    barcodeModal.classList.remove('hidden');
-                                } else {
-                                    alert(response.message);
-                                }
-                            },
-                            error: function() {
-                                alert('Error occurred while fetching document information.');
+                    // Lakukan AJAX request untuk mendapatkan informasi dokumen
+                    $.ajax({
+                        url: "{{ route('documents.get') }}",
+                        method: "POST",
+                        data: {
+                            _token: "{{ csrf_token() }}",
+                            doc_partno: barcodeValue
+                        },
+                        success: function(response) {
+                            if (response.success) {
+                                // Tampilkan dokumen dalam iframe
+                                documentContent.src = response.doc_path;
+                                barcodeModal.classList.remove('hidden');
+                            } else {
+                                alert(response.message);
                             }
-                        });
+                        },
+                        error: function() {
+                            alert('Error occurred while fetching document information.');
+                        }
+                    });
 
-                        // Reset nilai input setelah submit
-                        barcodeInput.value = '';
-                        barcodeInput.focus();
-                    } else {
-                        alert('Please enter a barcode');
-                    }
-                });
+                    // Reset nilai input setelah submit
+                    barcodeInput.value = '';
+                    barcodeInput.focus();
+                } else {
+                    alert('Please enter a barcode');
+                }
+            });
 
-                 // Hide modal function
-        function hideModal() {
-            barcodeModal.classList.add('hidden');
-        }
+            // Hide modal function
+            function hideModal() {
+                barcodeModal.classList.add('hidden');
+            }
             // Event listener for close buttons
-            document.getElementById('closeModalButton').addEventListener('click', hideModal); document.getElementById(
+            document.getElementById('closeModalButton').addEventListener('click', hideModal);
+            document.getElementById(
                 'closeModalFooterButton').addEventListener('click', hideModal);
 
             // Optionally, listen for clicking outside the modal content to close

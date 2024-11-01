@@ -89,13 +89,19 @@ class DocumentController extends Controller
     // Mengambil data dokumen
     public function getDocument(Request $request)
 {
-    $doc_partno = $request->input('doc_partno');
-    $document = Document::where('doc_partno', $doc_partno)->first();
+    $docPartNo = $request->input('doc_partno');
+    $document = Document::where('doc_partno', $docPartNo)->first();
 
     if ($document) {
-        return response()->json(['success' => true, 'doc_path' => asset($document->doc_path)]);
+        return response()->json([
+            'success' => true,
+            'doc_path' => asset("pdf/{$document->doc_path}") // Pastikan `doc_path` berisi nama file PDF yang disimpan di folder 'public/pdf/'
+        ]);
     } else {
-        return response()->json(['success' => false, 'message' => 'Document not found']);
+        return response()->json([
+            'success' => false,
+            'message' => 'Document not found'
+        ]);
     }
 }
 
