@@ -29,26 +29,14 @@
 
         <!-- Modal Container -->
         <div id="barcodeModal" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 hidden">
-            <div class="bg-white rounded-lg shadow-lg w-11/12 md:w-10/12 lg:w-9/12 xl:w-8/12 p-6">
-                <!-- Modal Header -->
-                <div class="flex justify-between items-center border-b pb-3">
-                    <h3 class="text-xl font-semibold">Document Information</h3>
-                    <button id="closeModalButton" class="text-gray-600 hover:text-gray-900 text-3xl">&times;</button>
-                </div>
-
+            <div class="bg-white rounded-lg shadow-lg w-full h-full p-0">
                 <!-- Modal Body -->
-                <div class="mt-4">
-                    <iframe id="documentContent" src="" class="w-full h-[700px] md:h-[600px]"
-                        type="application/pdf"></iframe>
-                </div>
-
-                <!-- Modal Footer -->
-                <div class="flex justify-end mt-6">
-                    <button id="closeModalFooterButton"
-                        class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-700 transition">Close</button>
+                <div class="w-full h-full">
+                    <iframe id="documentContent" src="" class="w-full h-full" type="application/pdf"></iframe>
                 </div>
             </div>
         </div>
+
 
         <script>
             document.addEventListener('DOMContentLoaded', () => {
