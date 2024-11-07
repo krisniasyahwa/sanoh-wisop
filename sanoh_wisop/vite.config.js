@@ -3,10 +3,17 @@ import laravel from 'laravel-vite-plugin';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
+    css: {
+        preprocessorOptions: {
+            scss: {
+                quietDeps: true,
+            },
+        },
+    },
     plugins: [
         laravel({
             input: [
-                'resources/css/app.scss',
+                'resources/sass/app.scss',
                 'resources/js/app.js',
                 'resources/css/app.css',
             ],
