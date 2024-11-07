@@ -28,16 +28,19 @@
 
 <body>
     <div id="app">
+       @yield('content')
 
-        <div class="flex h-screen overflow-hidden">
+        {{-- <div class="flex h-screen overflow-hidden">
             <!-- Include Sidebar -->
             @include('layouts.partials.sidebar')
 
             <div class="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
                 @include('layouts.partials.header')
 
+                @include('section')
             </div>
-        </div>
+        </div> --}}
+    </div>
 </body>
 
 </html>
