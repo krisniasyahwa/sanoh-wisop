@@ -9,16 +9,24 @@
     @vite('resources/css/app.css')
 </head>
 
-<body class="font-sans antialiased bg-white dark:bg-slate-900 dark:text-white/50">
-    <header class="flex p-4 bg-gray-800 text-white">
+<body class="font-medium antialiased bg-white dark:bg-slate-900 dark:text-white/50">
+    <header class="flex items-center justify-between p-4 bg-gray-300 text-white">
+        <!-- Logo di sebelah kiri -->
+        <div class="flex items-center">
+            <img src="{{ asset('/images/logo/logo-sanoh.png') }}" alt="Logo" class="h-8 w-auto mr-4">
+            <!-- Sesuaikan ukuran logo dengan `class="h-8 w-auto mr-4"` atau sesuai kebutuhan -->
+        </div>
+
+        <!-- Tombol login di sebelah kanan -->
         <div class="ml-auto">
-            <a href="/login" class="px-4 py-2 bg-blue-500 rounded hover:bg-blue-700 transition">Login</a>
+            <a href="/login" class="px-4 py-2 text-black hover:text-blue-900">Login</a>
         </div>
     </header>
 
+
     <!-- Main content starts here -->
-    <main class="flex flex-col items-center justify-center min-h-screen">
-        <h1 class="text-4xl font-bold mb-4">Welcome to PT. Sanoh Indonesia</h1>
+    <main class="flex flex-col items-center justify-center min-h-screen bg-gradient-to-tr to-blue-950 from-blue-900">
+        <h1 class="animate-typing overflow-hidden whitespace-nowrap border-r-4 border-r-white pr-5 text-5xl text-white font-bold mb-8">Please scan your barcode here!</h1>
         <form class="w-full max-w-sm" id="barcodeForm">
             <div class="mb-4">
                 <input id="barcodeInput"
@@ -36,7 +44,6 @@
                 </div>
             </div>
         </div>
-
 
         <script>
             document.addEventListener('DOMContentLoaded', () => {
