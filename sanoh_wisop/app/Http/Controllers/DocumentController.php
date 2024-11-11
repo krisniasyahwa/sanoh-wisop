@@ -10,9 +10,13 @@ class DocumentController extends Controller
     // Menampilkan daftar dokumen (khusus Admin)
     public function index()
     {
+        // Mengambil semua dokumen beserta relasi masterItem
         $documents = Document::with('masterItem')->get();
-        return view('admin.documents.index', compact('documents'));
+        dd($documents); 
+        // Mengarahkan ke tampilan home dan mengirimkan variabel documents
+        return view('home', compact('documents'));
     }
+
 
 
     // Menampilkan form untuk menambah dokumen baru
@@ -88,21 +92,20 @@ class DocumentController extends Controller
 
     // Mengambil data dokumen
     public function getDocument(Request $request)
-{
-    $docPartNo = $request->input('doc_partno');
-    $document = Document::where('doc_partno', $docPartNo)->first();
+    {
+        $docPartNo = $request->input('doc_partno');
+        $document = Document::where('doc_partno', $docPartNo)->first();
 
-    if ($document) {
-        return response()->json([
-            'success' => true,
-            'doc_path' => asset("pdf/{$document->doc_path}") // Pastikan `doc_path` berisi nama file PDF yang disimpan di folder 'public/pdf/'
-        ]);
-    } else {
-        return response()->json([
-            'success' => false,
-            'message' => 'Document not found'
-        ]);
+        if ($document) {
+            return response()->json([
+                'success' => true,
+                'doc_path' => asset("pdf/{$document->doc_path}") // Pastikan `doc_path` berisi nama file PDF yang disimpan di folder 'public/pdf/'
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Document not found'
+            ]);
+        }
     }
-}
-
 }

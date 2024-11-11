@@ -47,19 +47,25 @@ Route::post('/documents/get-document', [DocumentController::class, 'getDocument'
 
 // Group Route untuk Admin dengan middleware 'isAdmin'
 Route::middleware(['auth', 'isAdmin'])->group(function () {
-    // Menampilkan daftar dokumen
+    // Menampilkan daftar dokumen untuk admin
     Route::get('/admin/documents', [DocumentController::class, 'index'])->name('admin.documents.index');
+
     // Menampilkan form untuk menambah dokumen baru
     Route::get('/admin/documents/create', [DocumentController::class, 'create'])->name('admin.documents.create');
+
     // Menyimpan dokumen baru
     Route::post('/admin/documents', [DocumentController::class, 'store'])->name('admin.documents.store');
+
     // Menampilkan form untuk mengedit dokumen
     Route::get('/admin/documents/{id}/edit', [DocumentController::class, 'edit'])->name('admin.documents.edit');
+
     // Memperbarui dokumen yang sudah ada
     Route::put('/admin/documents/{id}', [DocumentController::class, 'update'])->name('admin.documents.update');
+
     // Menghapus dokumen
     Route::delete('/admin/documents/{id}', [DocumentController::class, 'destroy'])->name('admin.documents.destroy');
 });
+
 
 // Group Route untuk Warehouse dengan middleware 'auth'
 Route::middleware(['auth'])->group(function () {
@@ -69,4 +75,4 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/warehouse/show', [DocumentController::class, 'show'])->name('warehouse.show');
 });
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');

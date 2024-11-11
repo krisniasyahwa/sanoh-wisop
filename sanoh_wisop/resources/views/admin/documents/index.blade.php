@@ -1,42 +1,77 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html lang="en">
 
-@section('content')
-<div class="container">
-    <h1>Daftar Dokumen</h1>
-    <a href="{{ route('admin.products.create') }}" class="btn btn-primary mb-3">Tambah Dokumen Baru</a>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Table</title>
+</head>
 
-    @if (session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
+<body>
+    <!-- Table -->
+    <div class="flex flex-col mt-5">
+        <div class="relative overflow-x-auto shadow-md rounded-lg border border-gray-300">
+            <!-- layouts/partials/table.blade.php -->
+            <table class="w-full text-[11px] text-left text-gray-700 dark:text-gray-700">
+                <thead class="text-[14px] text-gray-700">
+                    <tr>
+                        <th scope="col"
+                            class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer">
+                            Part No.</th>
+                        <th scope="col"
+                            class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer">
+                            Type</th>
+                        <th scope="col"
+                            class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer">
+                            Doc Name</th>
+                        <th scope="col"
+                            class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer">
+                            Doc Rev</th>
+                        <th scope="col"
+                            class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer">
+                            Effective Date</th>
+                        <th scope="col"
+                            class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer">
+                            Expired Date</th>
+                        <th scope="col"
+                            class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer">
+                            Status</th>
+                        <th scope="col"
+                            class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer">
+                            Customer</th>
+                        <th scope="col"
+                            class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer">
+                            Department</th>
+                        <th scope="col"
+                            class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer">
+                            Process</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body">
+                    @foreach ($documents as $document)
+                        <tr>
+                            <td class="px-2 py-3 text-center border-b border-gray-300">{{ $document->doc_partno }}</td>
+                            <td class="px-2 py-3 text-center border-b border-gray-300">{{ $document->doc_type }}</td>
+                            <td class="px-2 py-3 text-center border-b border-gray-300">{{ $document->doc_path }}</td>
+                            <td class="px-2 py-3 text-center border-b border-gray-300">{{ $document->doc_rev }}</td>
+                            <td class="px-2 py-3 text-center border-b border-gray-300">
+                                {{ \Carbon\Carbon::parse($document->doc_effective_date)->format('Y-m-d') }}</td>
+                            <td class="px-2 py-3 text-center border-b border-gray-300">
+                                {{ \Carbon\Carbon::parse($document->doc_expired_date)->format('Y-m-d') }}</td>
+                            <td class="px-2 py-3 text-center border-b border-gray-300">{{ $document->doc_status }}</td>
+                            <td class="px-2 py-3 text-center border-b border-gray-300">{{ $document->doc_customer }}
+                            </td>
+                            <td class="px-2 py-3 text-center border-b border-gray-300">{{ $document->doc_dept }}</td>
+                            <td class="px-2 py-3 text-center border-b border-gray-300">{{ $document->doc_process }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+
         </div>
-    @endif
+    </div>
 
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Part Number</th>
-                <th>Type</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($documents as $document)
-                <tr>
-                    <td>{{ $document->doc_id }}</td>
-                    <td>{{ $document->doc_partno }}</td>
-                    <td>{{ $document->doc_type }}</td>
-                    <td>
-                        <a href="{{ route('admin.products.edit', $document->doc_id) }}" class="btn btn-warning">Edit</a>
-                        <form action="{{ route('admin.products.destroy', $document->doc_id) }}" method="POST" class="d-inline">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger" onclick="return confirm('Yakin ingin menghapus dokumen ini?')">Hapus</button>
-                        </form>
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
-</div>
-@endsection
+</body>
+
+</html>
