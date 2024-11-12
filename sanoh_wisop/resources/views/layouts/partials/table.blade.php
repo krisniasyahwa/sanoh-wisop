@@ -25,7 +25,6 @@
                         <th scope="col" class="px-2 py-3 text-center border-b border-gray-400">Status</th>
                         <th scope="col" class="px-2 py-3 text-center border-b border-gray-400">Customer</th>
                         <th scope="col" class="px-2 py-3 text-center border-b border-gray-400">Department</th>
-                        <th scope="col" class="px-2 py-3 text-center border-b border-gray-400">Process</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -33,7 +32,12 @@
                         <tr>
                             <td class="px-2 py-3 text-center border-b border-gray-300">{{ $document->doc_partno }}</td>
                             <td class="px-2 py-3 text-center border-b border-gray-300">{{ $document->doc_type }}</td>
-                            <td class="px-2 py-3 text-center border-b border-gray-300">{{ $document->doc_path }}</td>
+                            <td class="px-2 py-3 text-center border-b border-gray-300 flex items-center justify-center">
+                                <!-- PDF Icon as Link to Document -->
+                                <a href="{{ asset('storage/documents/' . $document->doc_path) }}" target="_blank">
+                                    <img src="{{ asset('images/icon/icon_pdf.svg') }}" alt="PDF Icon" class="w-6 h-6">
+                                </a>
+                            </td>
                             <td class="px-2 py-3 text-center border-b border-gray-300">{{ $document->doc_rev }}</td>
                             <td class="px-2 py-3 text-center border-b border-gray-300">
                                 {{ \Carbon\Carbon::parse($document->doc_effective_date)->format('Y-m-d') }}</td>
@@ -43,7 +47,6 @@
                             <td class="px-2 py-3 text-center border-b border-gray-300">{{ $document->doc_customer }}
                             </td>
                             <td class="px-2 py-3 text-center border-b border-gray-300">{{ $document->doc_dept }}</td>
-                            <td class="px-2 py-3 text-center border-b border-gray-300">{{ $document->doc_process }}</td>
                         </tr>
                     @endforeach
                 </tbody>

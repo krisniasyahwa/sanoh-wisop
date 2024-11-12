@@ -10,20 +10,49 @@ class DocumentController extends Controller
     // Menampilkan daftar dokumen (khusus Admin)
     public function index()
     {
-        // Mengambil semua dokumen beserta relasi masterItem
         $documents = Document::with('masterItem')->get();
-        dd($documents); 
-        // Mengarahkan ke tampilan home dan mengirimkan variabel documents
+        // dd($documents);  // Verifikasi bahwa data sudah diambil dengan benar
+
+        // Mengirim data ke view 'home'
         return view('home', compact('documents'));
     }
 
 
-
     // Menampilkan form untuk menambah dokumen baru
-    public function create()
-    {
-        return view('admin.documents.create');
-    }
+    public function uploadFile(Request $request)
+{
+    // Validasi input
+    $request->validate([
+        'doc_partno' => 'required|string|max:255',
+        'doc_type' => 'required|in:WI,SOP,SPIS,SPSS',
+        'doc_name' => 'required|file|mimes:pdf,doc,docx,xlsx|max:2048',
+        'doc_rev' => 'required|string|max:10',
+        'doc_effective_date' => 'required|date',
+        'doc_expired_date' => 'required|date|after_or_equal:doc_effective_date',
+        'doc_status' => 'required|string|max:50',
+        'doc_customer' => 'required|string|max:255',
+        'doc_dept' => 'required|string|max:255',
+    ]);
+
+    // Menyimpan file ke folder 'documents' di storage dan mendapatkan path-nya
+    $filePath = $request->file('doc_name')->store('documents');
+
+    // Membuat data baru di tabel `documents`
+    Document::create([
+        'doc_partno' => $request->doc_partno,
+        'doc_type' => $request->doc_type,
+        'doc_path' => $filePath,
+        'doc_rev' => $request->doc_rev,
+        'doc_effective_date' => $request->doc_effective_date,
+        'doc_expired_date' => $request->doc_expired_date,
+        'doc_status' => $request->doc_status,
+        'doc_customer' => $request->doc_customer,
+        'doc_dept' => $request->doc_dept,
+    ]);
+
+    // Redirect dengan pesan sukses
+    return back()->with('success', 'File berhasil diupload dan disimpan.');
+}
 
     // Menyimpan dokumen baru ke dalam database
     public function store(Request $request)

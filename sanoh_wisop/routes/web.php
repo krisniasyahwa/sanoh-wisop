@@ -39,6 +39,10 @@ Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware(
 // Route untuk menampilkan halaman dokumen (sebagai user biasa)
 Route::get('/documents', [DocumentController::class, 'index'])->name('documents');
 
+
+    // Route untuk upload file yang bisa diakses oleh semua pengguna yang sudah login
+    Route::post('/documents/upload', [DocumentController::class, 'uploadFile'])->name('documents.upload');
+
 //Route untuk mengambil data
 Route::post('/documents/get-document', [DocumentController::class, 'getDocument'])->name('documents.get');
 
@@ -66,7 +70,6 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::delete('/admin/documents/{id}', [DocumentController::class, 'destroy'])->name('admin.documents.destroy');
 });
 
-
 // Group Route untuk Warehouse dengan middleware 'auth'
 Route::middleware(['auth'])->group(function () {
     // Menampilkan halaman untuk scan dokumen
@@ -75,4 +78,5 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/warehouse/show', [DocumentController::class, 'show'])->name('warehouse.show');
 });
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/home', [DocumentController::class, 'index'])->name('home')->middleware('auth');
+
