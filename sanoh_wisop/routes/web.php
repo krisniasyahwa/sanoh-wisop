@@ -39,9 +39,10 @@ Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware(
 // Route untuk menampilkan halaman dokumen (sebagai user biasa)
 Route::get('/documents', [DocumentController::class, 'index'])->name('documents');
 
+Route::get('/get-document', [DocumentController::class, 'getDocument'])->name('document.get');
 
-    // Route untuk upload file yang bisa diakses oleh semua pengguna yang sudah login
-    Route::post('/documents/upload', [DocumentController::class, 'uploadFile'])->name('documents.upload');
+// Route untuk upload file yang bisa diakses oleh semua pengguna yang sudah login
+Route::post('/documents/upload', [DocumentController::class, 'uploadFile'])->name('documents.upload');
 
 //Route untuk mengambil data
 Route::post('/documents/get-document', [DocumentController::class, 'getDocument'])->name('documents.get');

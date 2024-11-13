@@ -6,13 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Table</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Load jQuery -->
 </head>
 
 <body>
     <!-- Table -->
     <div class="flex flex-col mt-5">
         <div class="relative overflow-x-auto shadow-md rounded-lg border border-gray-300">
-            <!-- layouts/partials/table.blade.php -->
             <table class="w-full text-[11px] text-left text-gray-700 dark:text-gray-700">
                 <thead class="text-[14px] text-gray-700">
                     <tr>
@@ -33,8 +33,8 @@
                             <td class="px-2 py-3 text-center border-b border-gray-300">{{ $document->doc_partno }}</td>
                             <td class="px-2 py-3 text-center border-b border-gray-300">{{ $document->doc_type }}</td>
                             <td class="px-2 py-3 text-center border-b border-gray-300 flex items-center justify-center">
-                                <!-- PDF Icon as Link to Document -->
-                                <a href="{{ asset('storage/documents/' . $document->doc_path) }}" target="_blank">
+                                <a href="{{ asset('storage/app/private/documents/' . $document->doc_path) }}"
+                                    target="_blank">
                                     <img src="{{ asset('images/icon/icon_pdf.svg') }}" alt="PDF Icon" class="w-6 h-6">
                                 </a>
                             </td>
@@ -54,6 +54,32 @@
         </div>
     </div>
 
+    <!-- JavaScript AJAX -->
+    <script>
+        // Contoh kode AJAX untuk mendapatkan informasi dokumen berdasarkan barcode
+        function fetchDocument(barcodeValue) {
+            $.ajax({
+                url: "{{ route('document.get') }}",
+                method: "POST", // Gunakan POST jika Anda menambahkan CSRF token
+                data: {
+                    _token: "{{ csrf_token() }}", // Tambahkan CSRF token
+                    doc_partno: barcodeValue
+                },
+                success: function(response) {
+                    if (response.success) {
+                        document.getElementById('documentContent').src = response.doc_path;
+                        document.getElementById('barcodeModal').classList.remove('hidden');
+                    } else {
+                        alert(response.message);
+                    }
+                },
+                error: function() {
+                    alert('Error occurred while fetching document information.');
+                }
+            });
+
+        }
+    </script>
 </body>
 
 </html>

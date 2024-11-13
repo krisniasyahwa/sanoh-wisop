@@ -18,7 +18,7 @@
 
         <!-- Tabel dan Form Upload -->
         <main class="flex-1 mt-16 flex justify-center bg-gray-100">
-            <div class="w-full max-w-6xl px-4 py-4 space-y-4">  <!-- space-y-4 ensures consistent spacing -->
+            <div class="w-full max-w-6xl px-4 py-4 space-y-4 mt-4">  <!-- space-y-4 ensures consistent spacing -->
 
                 <!-- Include Upload File Section -->
                 @include('layouts.partials.upload_file')

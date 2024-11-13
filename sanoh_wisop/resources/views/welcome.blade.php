@@ -25,7 +25,7 @@
 
 
     <!-- Main content starts here -->
-    <main class="flex flex-col items-center justify-center min-h-screen bg-gradient-to-tr to-blue-950 from-blue-900">
+    <main class="flex flex-col items-center justify-center min-h-screen bg-gradient-to-tr to-blue-950 from-blue-700">
         <h1 class="animate-typing overflow-hidden whitespace-nowrap border-r-4 border-r-white pr-5 text-5xl text-white font-bold mb-8">Please scan your barcode here!</h1>
         <form class="w-full max-w-sm" id="barcodeForm">
             <div class="mb-4">
