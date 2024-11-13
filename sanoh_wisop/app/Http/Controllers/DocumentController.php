@@ -34,14 +34,25 @@ class DocumentController extends Controller
             'doc_dept' => 'required|string|max:255',
         ]);
 
-        // Menyimpan file ke folder 'documents' di storage dan mendapatkan path-nya
-        $filePath = $request->file('doc_name')->store('documents');
+        // Ambil file dari request
+        $file = $request->file('doc_name');
 
-        // Membuat data baru di tabel `documents`
+        // Tentukan nama file
+        $fileName = time() . '-' . $file->getClientOriginalName();
+
+        // Pastikan folder `public/pdf` ada
+        if (!file_exists(public_path('pdf'))) {
+            mkdir(public_path('pdf'), 0755, true);
+        }
+
+        // Pindahkan file ke folder public/pdf
+        $file->move(public_path('pdf'), $fileName);
+
+        // Simpan path ke database (gunakan relative path)
         Document::create([
             'doc_partno' => $request->doc_partno,
             'doc_type' => $request->doc_type,
-            'doc_path' => $filePath,
+            'doc_path' => 'pdf/' . $fileName, // Simpan path relatif
             'doc_rev' => $request->doc_rev,
             'doc_effective_date' => $request->doc_effective_date,
             'doc_expired_date' => $request->doc_expired_date,
@@ -51,7 +62,7 @@ class DocumentController extends Controller
         ]);
 
         // Redirect dengan pesan sukses
-        return back()->with('success', 'File berhasil diupload dan disimpan.');
+        return back()->with('success', 'File berhasil diupload dan disimpan di public/pdf.');
     }
 
     // Menyimpan dokumen baru ke dalam database
@@ -128,12 +139,12 @@ class DocumentController extends Controller
         if ($document) {
             return response()->json([
                 'success' => true,
-                'doc_path' => asset("pdf/{$document->doc_path}") // Pastikan `doc_path` berisi nama file PDF yang disimpan di folder 'public/pdf/'
+                'doc_path' => asset($document->doc_path), // Gunakan path relatif dari database
             ]);
         } else {
             return response()->json([
                 'success' => false,
-                'message' => 'Document not found'
+                'message' => 'Document not found',
             ]);
         }
     }

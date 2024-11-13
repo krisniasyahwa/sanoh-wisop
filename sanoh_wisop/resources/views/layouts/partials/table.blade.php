@@ -33,10 +33,10 @@
                             <td class="px-2 py-3 text-center border-b border-gray-300">{{ $document->doc_partno }}</td>
                             <td class="px-2 py-3 text-center border-b border-gray-300">{{ $document->doc_type }}</td>
                             <td class="px-2 py-3 text-center border-b border-gray-300 flex items-center justify-center">
-                                <a href="{{ asset('storage/app/private/documents/' . $document->doc_path) }}"
-                                    target="_blank">
+                                <a href="{{ asset($document->doc_path) }}" target="_blank">
                                     <img src="{{ asset('images/icon/icon_pdf.svg') }}" alt="PDF Icon" class="w-6 h-6">
                                 </a>
+
                             </td>
                             <td class="px-2 py-3 text-center border-b border-gray-300">{{ $document->doc_rev }}</td>
                             <td class="px-2 py-3 text-center border-b border-gray-300">
