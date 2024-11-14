@@ -81,31 +81,31 @@ class DocumentController extends Controller
     }
 
     // Menampilkan form untuk mengedit dokumen
-    public function edit($id)
-    {
-        $document = Document::with('masterItem')->findOrFail($id);
-        return view('admin.documents.edit', compact('document'));
-    }
+   public function edit($doc_id)
+{
+    // Mencari dokumen berdasarkan doc_id
+    $document = Document::findOrFail($doc_id);
 
+    // Mengirim data dokumen ke view
+    return view('layouts.partials.edit_file', compact('document'));
+
+}
 
     // Memperbarui data dokumen yang ada
-    public function update(Request $request, $id)
+    public function update(Request $request, $doc_id)
     {
-        $document = Document::with('masterItem')->findOrFail($id);
-        $validated = $request->validate([
-            'doc_effective_date' => 'required|date',
-            'doc_expired_date' => 'required|date|after_or_equal:doc_effective_date',
-        ]);
+        $document = Document::findOrFail($doc_id); // Mendapatkan dokumen berdasarkan doc_id
+        $document->doc_expired_date = $request->doc_expired_date; // Memperbarui expired date
+        $document->save(); // Menyimpan perubahan
 
-        $document->update($validated);
-
-        return redirect()->route('admin.documents.index')->with('success', 'Dokumen berhasil diperbarui');
+        return redirect()->route('documents')->with('success', 'Document updated successfully');
     }
 
+
     // Menghapus dokumen
-    public function destroy($id)
+    public function destroy($doc_id)
     {
-        $document = Document::findOrFail($id);
+        $document = Document::findOrFail($doc_id);
         $document->delete();
 
         return redirect()->route('admin.documents.index')->with('success', 'Dokumen berhasil dihapus');
@@ -117,7 +117,7 @@ class DocumentController extends Controller
         return view('warehouse.show'); //ganti
     }
 
-    // Memvalidasi dan menampilkan dokumen setelah scan
+    // Memvaldoc_idasi dan menampilkan dokumen setelah scan
     public function show(Request $request)
     {
         $doc_partno = $request->input('doc_partno');

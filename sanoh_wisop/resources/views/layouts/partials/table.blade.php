@@ -25,6 +25,7 @@
                         <th scope="col" class="px-2 py-3 text-center border-b border-gray-400">Status</th>
                         <th scope="col" class="px-2 py-3 text-center border-b border-gray-400">Customer</th>
                         <th scope="col" class="px-2 py-3 text-center border-b border-gray-400">Department</th>
+                        <th scope="col" class="px-2 py-3 text-center border-b border-gray-400">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -47,6 +48,12 @@
                             <td class="px-2 py-3 text-center border-b border-gray-300">{{ $document->doc_customer }}
                             </td>
                             <td class="px-2 py-3 text-center border-b border-gray-300">{{ $document->doc_dept }}</td>
+                            <td class="px-2 py-3 text-center border-b border-gray-300">
+                                <!-- Icon Edit -->
+                                <a href="{{ route('document.edit', $document->doc_id) }}">
+                                    <img src="{{ asset('images/icon/icon_edit.svg') }}" alt="Edit Icon" class="w-5 h-5">
+                                </a>
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>

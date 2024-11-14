@@ -47,8 +47,14 @@ Route::post('/documents/upload', [DocumentController::class, 'uploadFile'])->nam
 //Route untuk mengambil data
 Route::post('/documents/get-document', [DocumentController::class, 'getDocument'])->name('documents.get');
 
-// Route untuk halaman manajemen akun
-Route::post('/documents/get-document', [DocumentController::class, 'getDocument'])->name('documents.get');
+// // Route untuk halaman manajemen akun
+// Route::post('/documents/get-document', [DocumentController::class, 'getDocument'])->name('documents.get');
+
+// Route untuk menampilkan form edit
+Route::get('/document/edit/{doc_id}', [DocumentController::class, 'edit'])->name('document.edit');
+
+//Route untuk memperbarui
+Route::put('/document/update/{doc_id}', [DocumentController::class, 'update'])->name('documents.update');
 
 // Group Route untuk Admin dengan middleware 'isAdmin'
 Route::middleware(['auth', 'isAdmin'])->group(function () {
@@ -60,9 +66,6 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
 
     // Menyimpan dokumen baru
     Route::post('/admin/documents', [DocumentController::class, 'store'])->name('admin.documents.store');
-
-    // Menampilkan form untuk mengedit dokumen
-    Route::get('/admin/documents/{id}/edit', [DocumentController::class, 'edit'])->name('admin.documents.edit');
 
     // Memperbarui dokumen yang sudah ada
     Route::put('/admin/documents/{id}', [DocumentController::class, 'update'])->name('admin.documents.update');
@@ -80,4 +83,3 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::get('/home', [DocumentController::class, 'index'])->name('home')->middleware('auth');
-
