@@ -1,7 +1,14 @@
 <script src="//unpkg.com/alpinejs" defer></script>
 
-<div x-data="{ showEditModal: true }">
-    <!-- Edit Document Modal -->
+<div x-data="{ showEditModal: false }">
+    <!-- Icon Edit untuk memicu modal -->
+    <div class="flex justify-center items-center h-full">
+        <a href="javascript:void(0);" @click="showEditModal = true">
+            <img src="{{ asset('images/icon/icon_edit.svg') }}" alt="Edit Icon" class="w-5 h-5">
+        </a>
+    </div>
+
+    <!-- Edit Modal Form -->
     <div x-show="showEditModal" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
         <div class="bg-white w-full max-w-2xl p-6 rounded-lg shadow-lg" @click.away="showEditModal = false">
             <div class="flex justify-between items-center mb-4">
@@ -10,7 +17,8 @@
             </div>
 
             <!-- Form Content -->
-            <form action="{{ route('documents.update', $document->doc_id) }}" method="POST">
+            <form action="{{ route('documents.update', $document->doc_id) }}" method="POST"
+                enctype="multipart/form-data">
                 @csrf
                 @method('PUT') <!-- Menggunakan metode PUT untuk update -->
 
@@ -33,6 +41,13 @@
                     <div class="mb-4">
                         <label for="doc_name" class="block text-sm font-medium">Doc Name</label>
                         <input type="text" id="doc_name" name="doc_name" value="{{ $document->doc_name }}"
+                            class="w-full px-3 py-2 border rounded-md bg-gray-100" readonly>
+                    </div>
+
+                    <!-- Doc Rev (readonly) -->
+                    <div class="mb-4">
+                        <label for="doc_rev" class="block text-sm font-medium">Doc Rev</label>
+                        <input type="text" id="doc_rev" name="doc_rev" value="{{ $document->doc_rev }}"
                             class="w-full px-3 py-2 border rounded-md bg-gray-100" readonly>
                     </div>
 
