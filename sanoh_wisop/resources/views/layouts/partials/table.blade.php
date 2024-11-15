@@ -44,7 +44,9 @@
                                 {{ \Carbon\Carbon::parse($document->doc_effective_date)->format('Y-m-d') }}</td>
                             <td class="px-2 py-3 text-center border-b border-gray-300">
                                 {{ \Carbon\Carbon::parse($document->doc_expired_date)->format('Y-m-d') }}</td>
-                            <td class="px-2 py-3 text-center border-b border-gray-300">{{ $document->doc_status }}</td>
+                            <td class="px-2 py-3 text-center border-b border-gray-300">
+                                {{ $document->doc_status == 1 ? '1' : '0' }}
+                            </td>
                             <td class="px-2 py-3 text-center border-b border-gray-300">{{ $document->doc_customer }}
                             </td>
                             <td class="px-2 py-3 text-center border-b border-gray-300">{{ $document->doc_dept }}</td>

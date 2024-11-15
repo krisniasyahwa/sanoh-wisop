@@ -47,10 +47,7 @@
                         <label for="doc_expired_date" class="block text-sm font-medium">Expired Date</label>
                         <input type="date" id="doc_expired_date" name="doc_expired_date" class="w-full px-3 py-2 border rounded-md" required>
                     </div>
-                    <div class="mb-4">
-                        <label for="doc_status" class="block text-sm font-medium">Status</label>
-                        <input type="text" id="doc_status" name="doc_status" class="w-full px-3 py-2 border rounded-md" required>
-                    </div>
+            
                     <div class="mb-4">
                         <label for="doc_customer" class="block text-sm font-medium">Customer</label>
                         <input type="text" id="doc_customer" name="doc_customer" class="w-full px-3 py-2 border rounded-md" required>

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Document extends Model
 {
@@ -35,4 +36,20 @@ class Document extends Model
     {
         return $this->belongsTo(MasterItem::class, 'doc_partno', 'doc_partno');
     }
+
+
+public static function boot()
+{
+    parent::boot();
+
+    static::creating(function ($document) {
+        // Tentukan tanggal kedaluwarsa dan tanggal sekarang
+        $expiredDate = Carbon::parse($document->doc_expired_date);
+        $currentDate = Carbon::now();
+
+        // Tentukan status berdasarkan perbandingan tanggal
+        $document->doc_status = ($expiredDate >= $currentDate) ? 1 : 0;
+    });
+}
+
 }

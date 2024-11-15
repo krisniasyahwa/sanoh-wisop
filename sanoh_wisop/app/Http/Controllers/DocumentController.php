@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Document;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class DocumentController extends Controller
 {
@@ -17,53 +18,54 @@ class DocumentController extends Controller
         return view('home', compact('documents'));
     }
 
-
     // Menampilkan form untuk menambah dokumen baru
     public function uploadFile(Request $request)
     {
         // Validasi input
         $request->validate([
-            'doc_partno' => 'required|string|max:255',
-            'doc_type' => 'required|in:WI,SOP,SPIS,SPSS',
-            'doc_name' => 'required|file|mimes:pdf,doc,docx,xlsx|max:2048',
-            'doc_rev' => 'required|string|max:10',
+            'doc_partno' => 'required',
+            'doc_type' => 'required',
+            'doc_name' => 'required|file',
+            'doc_rev' => 'required',
             'doc_effective_date' => 'required|date',
-            'doc_expired_date' => 'required|date|after_or_equal:doc_effective_date',
-            'doc_status' => 'required|string|max:50',
-            'doc_customer' => 'required|string|max:255',
-            'doc_dept' => 'required|string|max:255',
+            'doc_expired_date' => 'required|date',
+            'doc_customer' => 'required',
+            'doc_dept' => 'required',
         ]);
 
-        // Ambil file dari request
-        $file = $request->file('doc_name');
+        // Tentukan tanggal kedaluwarsa dan tanggal sekarang
+        $expiredDate = Carbon::parse($request->doc_expired_date);
+        $currentDate = Carbon::now();
 
-        // Tentukan nama file
-        $fileName = time() . '-' . $file->getClientOriginalName();
+        // Tentukan status berdasarkan perbandingan tanggal, dalam bentuk integer
+        $status = ($expiredDate >= $currentDate) ? 1 : 0;
 
-        // Pastikan folder `public/pdf` ada
-        if (!file_exists(public_path('pdf'))) {
-            mkdir(public_path('pdf'), 0755, true);
+        // Simpan dokumen baru
+        $document = new Document();
+        $document->doc_partno = $request->doc_partno;
+        $document->doc_type = $request->doc_type;
+        $document->doc_rev = $request->doc_rev;
+        $document->doc_effective_date = $request->doc_effective_date;
+        $document->doc_expired_date = $request->doc_expired_date;
+        $document->doc_customer = $request->doc_customer;
+        $document->doc_dept = $request->doc_dept;
+
+        // Proses file upload
+        if ($request->hasFile('doc_name')) {
+            $file = $request->file('doc_name');
+            $path = $file->storeAs('documents', $file->getClientOriginalName());
+            $document->doc_path = $path;
         }
 
-        // Pindahkan file ke folder public/pdf
-        $file->move(public_path('pdf'), $fileName);
+        // Tentukan status dokumen
+        $document->doc_status = $status; // Simpan status sebagai integer
 
-        // Simpan path ke database (gunakan relative path)
-        Document::create([
-            'doc_partno' => $request->doc_partno,
-            'doc_type' => $request->doc_type,
-            'doc_path' => 'pdf/' . $fileName, // Simpan path relatif
-            'doc_rev' => $request->doc_rev,
-            'doc_effective_date' => $request->doc_effective_date,
-            'doc_expired_date' => $request->doc_expired_date,
-            'doc_status' => $request->doc_status,
-            'doc_customer' => $request->doc_customer,
-            'doc_dept' => $request->doc_dept,
-        ]);
+        // Simpan dokumen ke database
+        $document->save();
 
-        // Redirect dengan pesan sukses
-        return back()->with('success', 'File berhasil diupload dan disimpan di public/pdf.');
+        return redirect()->route('documents')->with('success', 'Document uploaded successfully!');
     }
+
 
     // Menyimpan dokumen baru ke dalam database
     public function store(Request $request)
@@ -81,15 +83,14 @@ class DocumentController extends Controller
     }
 
     // Menampilkan form untuk mengedit dokumen
-   public function edit($doc_id)
-{
-    // Mencari dokumen berdasarkan doc_id
-    $document = Document::findOrFail($doc_id);
+    public function edit($doc_id)
+    {
+        // Mencari dokumen berdasarkan doc_id
+        $document = Document::findOrFail($doc_id);
 
-    // Mengirim data dokumen ke view
-    return view('layouts.partials.edit_file', compact('document'));
-
-}
+        // Mengirim data dokumen ke view
+        return view('layouts.partials.edit_file', compact('document'));
+    }
 
     // Memperbarui data dokumen yang ada
     public function update(Request $request, $doc_id)
