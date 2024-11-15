@@ -69,7 +69,7 @@
                 </div>
 
                 <div class="flex items-center justify-end mt-4">
-                    <button type="submit" class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600">Save
+                    <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">Save
                         Changes</button>
                     <button type="button" @click="showEditModal = false"
                         class="ml-2 px-4 py-2 bg-gray-400 text-white rounded-md hover:bg-gray-500">Cancel</button>

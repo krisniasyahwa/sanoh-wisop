@@ -10,7 +10,7 @@ class DocumentController extends Controller
     // Menampilkan daftar dokumen (khusus Admin)
     public function index()
     {
-        $documents = Document::with('masterItem')->get();
+        $documents = Document::with('masterItem')->paginate(6);
         // dd($documents);  // Verifikasi bahwa data sudah diambil dengan benar
 
         // Mengirim data ke view 'home'
