@@ -102,7 +102,6 @@ class DocumentController extends Controller
         return redirect()->route('documents')->with('success', 'Document updated successfully');
     }
 
-
     // Menghapus dokumen
     public function destroy($doc_id)
     {

@@ -40,8 +40,13 @@
                     <!-- Doc Name (readonly) -->
                     <div class="mb-4">
                         <label for="doc_name" class="block text-sm font-medium">Doc Name</label>
-                        <input type="text" id="doc_name" name="doc_name" value="{{ $document->doc_name }}"
-                            class="w-full px-3 py-2 border rounded-md bg-gray-100" readonly>
+                        <div class="flex items-center gap-2">
+                            <input type="text" id="doc_name" name="doc_name"
+                                value="{{ basename($document->doc_path) }}"
+                                class="w-full px-3 py-2 border rounded-md bg-gray-100" readonly>
+                            <a href="{{ asset($document->doc_path) }}" target="_blank"
+                                class="text-blue-500 underline">View</a>
+                        </div>
                     </div>
 
                     <!-- Doc Rev (readonly) -->
