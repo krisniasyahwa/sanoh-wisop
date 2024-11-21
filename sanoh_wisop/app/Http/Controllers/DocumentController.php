@@ -53,8 +53,10 @@ class DocumentController extends Controller
         // Proses file upload
         if ($request->hasFile('doc_name')) {
             $file = $request->file('doc_name');
-            $path = $file->storeAs('documents', $file->getClientOriginalName());
-            $document->doc_path = $path;
+            $destinationPath = public_path('pdf'); 
+            $fileName = $file->getClientOriginalName();
+            $file->move($destinationPath, $fileName);
+            $document->doc_path = 'pdf/' . $fileName;
         }
 
         // Tentukan status dokumen
