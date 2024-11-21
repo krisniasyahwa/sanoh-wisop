@@ -1,4 +1,5 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
@@ -8,7 +9,8 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('APP_NAME', 'SOP System') }}</title>
+    <link rel="icon" href="images/icon/icon_sanoh.png">
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
