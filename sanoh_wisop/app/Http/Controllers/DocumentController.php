@@ -12,11 +12,19 @@ class DocumentController extends Controller
     public function index()
     {
         $documents = Document::with('masterItem')->paginate(6);
-        // dd($documents);  // Verifikasi bahwa data sudah diambil dengan benar
+
+        // Update status setiap dokumen berdasarkan tanggal expired
+        foreach ($documents as $document) {
+            $currentDate = Carbon::now();
+            $expiredDate = Carbon::parse($document->doc_expired_date);
+
+            $document->doc_status = ($expiredDate >= $currentDate) ? 1 : 0;
+        }
 
         // Mengirim data ke view 'home'
         return view('home', compact('documents'));
     }
+
 
     // Menampilkan form untuk menambah dokumen baru
     public function uploadFile(Request $request)
@@ -53,7 +61,7 @@ class DocumentController extends Controller
         // Proses file upload
         if ($request->hasFile('doc_name')) {
             $file = $request->file('doc_name');
-            $destinationPath = public_path('pdf'); 
+            $destinationPath = public_path('pdf');
             $fileName = $file->getClientOriginalName();
             $file->move($destinationPath, $fileName);
             $document->doc_path = 'pdf/' . $fileName;

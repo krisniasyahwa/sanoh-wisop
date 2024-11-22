@@ -44,9 +44,14 @@
                                 {{ \Carbon\Carbon::parse($document->doc_effective_date)->format('Y-m-d') }}</td>
                             <td class="px-2 py-3 text-center border-b border-gray-300">
                                 {{ \Carbon\Carbon::parse($document->doc_expired_date)->format('Y-m-d') }}</td>
-                            <td class="px-2 py-3 text-center border-b border-gray-300">
-                                {{ $document->doc_status == 1 ? '1' : '0' }}
-                            </td>
+                                <td class="px-2 py-3 text-center border-b border-gray-300">
+                                    @if ($document->doc_status == 1)
+                                        <span class="text-green-500 font-bold">Active</span> <!-- Status aktif -->
+                                    @else
+                                        <span class="text-red-500 font-bold">Expired</span> <!-- Status kedaluwarsa -->
+                                    @endif
+                                </td>
+
                             <td class="px-2 py-3 text-center border-b border-gray-300">{{ $document->doc_customer }}
                             </td>
                             <td class="px-2 py-3 text-center border-b border-gray-300">{{ $document->doc_dept }}</td>
