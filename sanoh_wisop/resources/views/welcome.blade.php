@@ -26,7 +26,8 @@
 
     <!-- Main content starts here -->
     <main class="flex flex-col items-center justify-center min-h-screen bg-blue-950">
-        <h1 class=" overflow-hidden whitespace-nowrap pr-5 text-5xl text-white font-bold mb-8">Pindai Part No. di bawah ini!</h1>
+        <h1 class=" overflow-hidden whitespace-nowrap pr-5 text-5xl text-white font-bold mb-8">Pindai Part No. di bawah
+            ini!</h1>
         <form class="w-full max-w-sm" id="barcodeForm">
             <div class="mb-4">
                 <input id="barcodeInput"
@@ -118,12 +119,18 @@
                                 // Tampilkan dokumen dalam iframe
                                 documentContent.src = response.doc_path;
                                 barcodeModal.classList.remove('hidden');
+                                // Tampilkan pesan dari server (aktif/kedaluwarsa)
+                                if (response.message) {
+                                    alert(response.message);
+                                }
                             } else {
+                                // Tampilkan pesan error jika dokumen tidak ditemukan
                                 alert(response.message);
                             }
                         },
+
                         error: function() {
-                            alert('Error occurred while fetching document information.');
+                            alert('Terjadi kesalahan saat mengambil data dokumen.');
                         }
                     });
 

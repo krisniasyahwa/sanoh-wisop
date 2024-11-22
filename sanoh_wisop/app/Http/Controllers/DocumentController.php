@@ -130,13 +130,27 @@ class DocumentController extends Controller
     // Memvaldoc_idasi dan menampilkan dokumen setelah scan
     public function show(Request $request)
     {
+        // Ambil dokumen berdasarkan `doc_partno` dari input
         $doc_partno = $request->input('doc_partno');
         $document = Document::with('masterItem')->where('doc_partno', $doc_partno)->first();
 
-        if ($document) {
+        if (!$document) {
+            // Jika dokumen tidak ditemukan
+            return redirect()->back()->with('error', 'Dokumen tidak ditemukan.');
+        }
+
+        // Hitung status dokumen berdasarkan tanggal expired
+        $currentDate = Carbon::now();
+        $expiredDate = Carbon::parse($document->doc_expired_date);
+        $doc_status = ($expiredDate >= $currentDate) ? 1 : 0;
+
+        // Periksa apakah dokumen memiliki status aktif (1)
+        if ($doc_status === 1) {
+            // Kirim data dokumen ke view jika aktif
             return view('warehouse.show', compact('document'));
         } else {
-            return redirect()->back()->with('error', 'Data tidak ditemukan');
+            // Jika dokumen tidak aktif, beri pesan error
+            return redirect()->back()->with('error', 'Dokumen sudah kedaluwarsa dan tidak dapat di-scan.');
         }
     }
 
@@ -147,14 +161,30 @@ class DocumentController extends Controller
         $document = Document::where('doc_partno', $docPartNo)->first();
 
         if ($document) {
+            // Hitung status dokumen berdasarkan tanggal expired
+            $currentDate = Carbon::now();
+            $expiredDate = Carbon::parse($document->doc_expired_date);
+            $doc_status = ($expiredDate >= $currentDate) ? 1 : 0;
+
+            if ($doc_status === 0) {
+                // Jika dokumen kedaluwarsa, jangan kirim doc_path
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Dokumen telah kedaluwarsa, silakan hubungi admin/leader produksi',
+                ]);
+            }
+
+            // Jika dokumen masih aktif
             return response()->json([
                 'success' => true,
-                'doc_path' => asset($document->doc_path), // Gunakan path relatif dari database
+                'doc_path' => asset($document->doc_path),
+
             ]);
         } else {
+            // Jika dokumen tidak ditemukan
             return response()->json([
                 'success' => false,
-                'message' => 'Document not found',
+                'message' => 'Dokumen tidak ditemukan.',
             ]);
         }
     }
