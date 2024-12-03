@@ -56,30 +56,4 @@ Route::get('/document/edit/{doc_id}', [DocumentController::class, 'edit'])->name
 //Route untuk memperbarui
 Route::put('/document/update/{doc_id}', [DocumentController::class, 'update'])->name('documents.update');
 
-// Group Route untuk Admin dengan middleware 'isAdmin'
-Route::middleware(['auth', 'isAdmin'])->group(function () {
-    // Menampilkan daftar dokumen untuk admin
-    Route::get('/admin/documents', [DocumentController::class, 'index'])->name('admin.documents.index');
-
-    // Menampilkan form untuk menambah dokumen baru
-    Route::get('/admin/documents/create', [DocumentController::class, 'create'])->name('admin.documents.create');
-
-    // Menyimpan dokumen baru
-    Route::post('/admin/documents', [DocumentController::class, 'store'])->name('admin.documents.store');
-
-    // Memperbarui dokumen yang sudah ada
-    Route::put('/admin/documents/{id}', [DocumentController::class, 'update'])->name('admin.documents.update');
-
-    // Menghapus dokumen
-    Route::delete('/admin/documents/{id}', [DocumentController::class, 'destroy'])->name('admin.documents.destroy');
-});
-
-// Group Route untuk Warehouse dengan middleware 'auth'
-Route::middleware(['auth'])->group(function () {
-    // Menampilkan halaman untuk scan dokumen
-    Route::get('/warehouse/scan', [DocumentController::class, 'scan'])->name('warehouse.scan');
-    // Menampilkan detail dokumen setelah scan
-    Route::post('/warehouse/show', [DocumentController::class, 'show'])->name('warehouse.show');
-});
-
 Route::get('/home', [DocumentController::class, 'index'])->name('home')->middleware('auth');

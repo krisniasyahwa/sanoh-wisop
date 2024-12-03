@@ -8,6 +8,6 @@ class AccountController extends Controller
 {
     public function index()
     {
-        return view('account.manage'); // Pastikan view ini ada di resources/views/account/manage.blade.php
+        return view('account.manage');
     }
 }

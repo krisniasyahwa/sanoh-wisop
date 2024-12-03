@@ -7,11 +7,11 @@
         <div class="hidden w-full xl:block xl:w-1/2">
             <div class="px-26 py-20 text-center flex flex-col items-center">
                 <!-- Logo -->
-                <a class="mb-5.5 inline-block" href="index.html">
+                <a class="mb-5.5 inline-block">
                     <img class="hidden dark:block" src="{{ asset('images/logo/logo-sanoh.png') }}" alt="Logo"
                         style="width: 150px; height: auto; transform: translateX(-20px);" />
                 </a>
-                
+
                 <!-- Illustration -->
                 <span class="mt-5 inline-block">
                     <img src="{{ asset('images/sign-in/illustration-03.svg') }}" alt="illustration" />

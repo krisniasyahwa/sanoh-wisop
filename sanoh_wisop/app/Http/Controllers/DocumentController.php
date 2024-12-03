@@ -121,12 +121,6 @@ class DocumentController extends Controller
         return redirect()->route('admin.documents.index')->with('success', 'Dokumen berhasil dihapus');
     }
 
-    // Menampilkan halaman scan dokumen (untuk Warehouse)
-    public function scan()
-    {
-        return view('warehouse.show'); //ganti
-    }
-
     // Memvaldoc_idasi dan menampilkan dokumen setelah scan
     public function show(Request $request)
     {
@@ -147,7 +141,7 @@ class DocumentController extends Controller
         // Periksa apakah dokumen memiliki status aktif (1)
         if ($doc_status === 1) {
             // Kirim data dokumen ke view jika aktif
-            return view('warehouse.show', compact('document'));
+            return view('', compact('document'));
         } else {
             // Jika dokumen tidak aktif, beri pesan error
             return redirect()->back()->with('error', 'Dokumen sudah kedaluwarsa dan tidak dapat di-scan.');
@@ -170,7 +164,7 @@ class DocumentController extends Controller
                 // Jika dokumen kedaluwarsa, jangan kirim doc_path
                 return response()->json([
                     'success' => false,
-                    'message' => 'Dokumen telah kedaluwarsa, silakan hubungi admin/leader produksi',
+                    'message' => 'Dokumen telah kedaluwarsa, silakan hubungi admin/leader produksi ',
                 ]);
             }
 
